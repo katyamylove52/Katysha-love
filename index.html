@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>index.html</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+:root{
+  --bg1:#fff1f4; --bg2:#ffd6e2; --ink:#4a1230; --muted:#8b4a68; --accent:#d61f5b; --glow:#ff7aa5; --card:rgba(255,255,255,.62); --line:rgba(214,31,91,.25);
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg1:#2b0a1d; --bg2:#4d1033; --ink:#ffe6ee; --muted:#e6a9c0; --accent:#ff5c8f; --glow:#ff3d7f; --card:rgba(255,255,255,.07); --line:rgba(255,92,143,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg1:#2b0a1d; --bg2:#4d1033; --ink:#ffe6ee; --muted:#e6a9c0; --accent:#ff5c8f; --glow:#ff3d7f; --card:rgba(255,255,255,.07); --line:rgba(255,92,143,.35);
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{
+  margin:0; color:var(--ink); font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif; font-size:21px; line-height:1.65;
+  background:linear-gradient(180deg,var(--bg1),var(--bg2)) fixed; min-height:100vh; overflow-x:hidden;
+}
+#sky{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.fh{position:absolute;bottom:-60px;line-height:1;opacity:0;animation:rise linear infinite;will-change:transform,opacity}
+@keyframes rise{0%{transform:translate3d(0,0,0) rotate(-12deg);opacity:0}10%{opacity:.85}100%{transform:translate3d(var(--dx),-115vh,0) rotate(14deg);opacity:0}}
+.burst{position:fixed;z-index:30;pointer-events:none;line-height:1;animation:pop 1.3s cubic-bezier(.15,.7,.3,1) forwards}
+@keyframes pop{0%{transform:translate(-50%,-50%) scale(.3);opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1) rotate(var(--r));opacity:0}}
+main{position:relative;z-index:1}
+section{max-width:680px;margin:0 auto;padding:72px 24px;text-align:center}
+
+/* hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding-top:40px}
+.name{font-family:"Marck Script","Brush Script MT",cursive;font-weight:400;font-size:clamp(76px,22vw,170px);line-height:1;margin:0;color:var(--accent);
+  text-shadow:0 0 40px var(--glow);
+  clip-path:inset(0 100% 0 0);animation:write 2.6s .4s cubic-bezier(.5,0,.2,1) forwards}
+@keyframes write{to{clip-path:inset(0 -10% 0 0)}}
+.sub{font-style:italic;font-size:clamp(22px,5vw,30px);color:var(--muted);margin:18px 0 0;opacity:0;animation:show 1.2s 2.8s forwards}
+@keyframes show{to{opacity:1}}
+.bigheart{width:84px;height:84px;margin-top:34px;opacity:0;animation:show 1s 3.2s forwards;cursor:pointer;background:none;border:0;padding:0}
+.bigheart span{display:block;font-size:76px;line-height:84px;filter:drop-shadow(0 0 14px var(--glow));animation:beat 1.4s 3.2s infinite}
+@keyframes beat{0%,100%{transform:scale(1)}14%{transform:scale(1.18)}28%{transform:scale(1)}42%{transform:scale(1.12)}70%{transform:scale(1)}}
+.hint{font-size:17px;color:var(--muted);margin-top:14px;opacity:0;animation:show 1s 3.6s forwards}
+
+/* letter */
+h2{font-family:"Marck Script",cursive;font-weight:400;font-size:clamp(40px,9vw,60px);color:var(--accent);margin:0 0 28px;line-height:1.15}
+.letter{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:40px 30px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);text-align:left;box-shadow:0 20px 60px -30px var(--glow)}
+.letter p{margin:0 0 1.1em}
+.js .letter .l{opacity:.12;transition:opacity 1.2s ease}
+.js .letter .l.in{opacity:1}
+.sign{text-align:right;font-family:"Marck Script",cursive;font-size:34px;color:var(--accent);margin:.6em 0 0}
+
+/* reasons */
+.reasons{list-style:none;margin:0;padding:0;text-align:left}
+.reasons li{display:flex;gap:16px;align-items:flex-start;padding:18px 4px;border-bottom:1px dashed var(--line)}
+.reasons li:last-child{border-bottom:0}
+.reasons .rh{flex:0 0 28px;font-size:21px;line-height:1.5}
+.reasons li:hover .rh{animation:beat 1s}
+
+/* counter */
+.count{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:36px 24px}
+.num{font-family:"Marck Script",cursive;font-size:clamp(64px,18vw,110px);color:var(--accent);line-height:1;text-shadow:0 0 30px var(--glow)}
+.count label{display:block;color:var(--muted);font-size:18px;margin-top:18px}
+.count input{font:inherit;font-size:20px;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:14px;padding:8px 14px;margin-top:8px}
+.count input:focus-visible,.bigheart:focus-visible,.again:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* finale */
+.finale p{font-size:clamp(26px,6vw,36px);font-style:italic;margin:0 0 26px}
+.again{font:inherit;font-size:22px;color:#fff;background:var(--accent);border:0;border-radius:999px;padding:14px 34px;cursor:pointer;box-shadow:0 10px 30px -8px var(--glow);transition:transform .2s}
+.again:hover{transform:scale(1.05)}.again:active{transform:scale(.97)}
+footer{text-align:center;padding:30px 24px 60px;color:var(--muted);font-size:18px;position:relative;z-index:1}
+
+</style>
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+<div id="sky" aria-hidden="true"><span class="fh" style="left:43%;font-size:20px;animation-duration:16s;animation-delay:-1s;--dx:-51px">💘</span><span class="fh" style="left:14%;font-size:27px;animation-duration:19s;animation-delay:-1s;--dx:56px">💘</span><span class="fh" style="left:29%;font-size:17px;animation-duration:11s;animation-delay:-13s;--dx:-7px">❤️</span><span class="fh" style="left:32%;font-size:18px;animation-duration:18s;animation-delay:-13s;--dx:-53px">💘</span><span class="fh" style="left:17%;font-size:23px;animation-duration:20s;animation-delay:-18s;--dx:-53px">💘</span><span class="fh" style="left:76%;font-size:28px;animation-duration:10s;animation-delay:-7s;--dx:-55px">💘</span><span class="fh" style="left:19%;font-size:25px;animation-duration:16s;animation-delay:-4s;--dx:9px">❤️</span><span class="fh" style="left:75%;font-size:25px;animation-duration:18s;animation-delay:-5s;--dx:-47px">💘</span><span class="fh" style="left:75%;font-size:36px;animation-duration:13s;animation-delay:-11s;--dx:-48px">💘</span><span class="fh" style="left:93%;font-size:18px;animation-duration:19s;animation-delay:-1s;--dx:19px">💖</span><span class="fh" style="left:65%;font-size:37px;animation-duration:18s;animation-delay:-13s;--dx:39px">💗</span><span class="fh" style="left:61%;font-size:34px;animation-duration:17s;animation-delay:-11s;--dx:-22px">💖</span><span class="fh" style="left:25%;font-size:38px;animation-duration:13s;animation-delay:-2s;--dx:13px">💗</span><span class="fh" style="left:69%;font-size:31px;animation-duration:15s;animation-delay:-14s;--dx:-24px">💘</span><span class="fh" style="left:11%;font-size:19px;animation-duration:18s;animation-delay:-13s;--dx:-39px">💗</span><span class="fh" style="left:21%;font-size:31px;animation-duration:16s;animation-delay:-1s;--dx:25px">❤️</span><span class="fh" style="left:73%;font-size:34px;animation-duration:15s;animation-delay:-10s;--dx:28px">💗</span><span class="fh" style="left:78%;font-size:31px;animation-duration:19s;animation-delay:-14s;--dx:-52px">❤️</span><span class="fh" style="left:36%;font-size:31px;animation-duration:20s;animation-delay:-2s;--dx:-53px">💗</span><span class="fh" style="left:84%;font-size:34px;animation-duration:20s;animation-delay:-14s;--dx:-24px">💕</span><span class="fh" style="left:87%;font-size:27px;animation-duration:10s;animation-delay:-14s;--dx:-15px">💖</span><span class="fh" style="left:80%;font-size:19px;animation-duration:17s;animation-delay:-1s;--dx:-33px">💗</span><span class="fh" style="left:18%;font-size:39px;animation-duration:13s;animation-delay:-12s;--dx:-10px">💕</span><span class="fh" style="left:12%;font-size:21px;animation-duration:17s;animation-delay:-12s;--dx:10px">💗</span></div>
+
+<main>
+  <section class="hero">
+    <h1 class="name">Катюша</h1>
+    <p class="sub">самой любимой, самой родной</p>
+    <button class="bigheart" id="heart" aria-label="Нажми на сердечко"><span>❤️</span></button>
+    <div class="hint">нажми на сердечко</div>
+  </section>
+
+  <section>
+    <h2>Слова для тебя</h2>
+    <div class="letter" id="letter">
+      <p class="l">Катюша, любимая моя. Я долго думал, как рассказать тебе обо всём, что у меня на сердце, и решил сделать для тебя маленький уголок, где живёт только наша нежность.</p>
+      <p class="l">Я тебя очень люблю. Правда очень. Мне с тобой хорошо, спокойно и тепло. Когда ты рядом, у меня всё хорошо, а когда тебя нет, я скучаю.</p>
+      <p class="l">Я часто думаю о тебе. Просто так, посреди дня. И каждый раз мне становится приятно, что ты у меня есть.</p>
+      <p class="l">Мне нравится в тебе всё: как ты улыбаешься, как говоришь, как смеёшься. Мне нравится просто быть рядом с тобой, даже если мы ничего не делаем.</p>
+      <p class="l">Спасибо, что ты со мной. Спасибо, что ты такая добрая и родная. Рядом с тобой я становлюсь лучше.</p>
+      <p class="l">Я хочу заботиться о тебе, поддерживать тебя и делать тебя счастливой. Если тебе будет плохо или грустно, я рядом, только скажи.</p>
+      <p class="l">Я хочу, чтобы ты знала: для меня ты самая лучшая. Я не говорю это просто так, я правда так чувствую.</p>
+      <p class="l">Я люблю тебя, Катюша. Сегодня, завтра и всегда.</p>
+      <p class="sign l">Твой Ромчик навсегда ❤️</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>За что я тебя люблю</h2>
+    <ul class="reasons">
+      <li><span class="rh">❤️</span><span>За твою улыбку, от которой у меня всё внутри согревается.</span></li>
+      <li><span class="rh">❤️</span><span>За твоё доброе сердце и за то, как ты заботишься о близких.</span></li>
+      <li><span class="rh">❤️</span><span>За то, что рядом с тобой я могу быть собой.</span></li>
+      <li><span class="rh">❤️</span><span>За твой смех - лучший звук на свете.</span></li>
+      <li><span class="rh">❤️</span><span>За тихие вечера и разговоры обо всём на свете.</span></li>
+      <li><span class="rh">❤️</span><span>За твои тёплые объятия, в которых хочется остаться навсегда.</span></li>
+      <li><span class="rh">❤️</span><span>За твою нежность и заботу, которые я чувствую каждый день.</span></li>
+      <li><span class="rh">❤️</span><span>За то, что с тобой я чувствую себя дома.</span></li>
+      <li><span class="rh">❤️</span><span>За то, что ты просто есть в моей жизни.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Наше время</h2>
+    <div class="count">
+      <div class="num" id="days">♥</div>
+      <div id="daysLabel">выбери дату, с которой мы вместе</div>
+      <label for="since">Наш первый день</label>
+      <input type="date" id="since">
+    </div>
+  </section>
+
+  <section class="finale">
+    <h2>И напоследок</h2>
+    <p>Ты - моя самая большая любовь и самое светлое счастье.</p>
+    <button class="again" id="again">Я тебя люблю</button>
+  </section>
+</main>
+<footer>Сделано с любовью Ромой - только для тебя, Катюша ♥</footer>
+
+<script>
+(function(){
+  var E=['❤️','💖','💗','💕','💘'];
+  function mk(cls,size){var e=document.createElement('span');e.className=cls;e.textContent=E[Math.floor(Math.random()*E.length)];e.style.fontSize=size+'px';return e}
+  function burst(x,y,n){
+    for(var i=0;i<n;i++){
+      var b=mk('burst',16+Math.random()*26);
+      var a=Math.random()*Math.PI*2,d=70+Math.random()*170;
+      b.style.left=x+'px';b.style.top=y+'px';
+      b.style.setProperty('--x',Math.cos(a)*d+'px');
+      b.style.setProperty('--y',(Math.sin(a)*d-40)+'px');
+      b.style.setProperty('--r',(Math.random()*80-40)+'deg');
+      document.body.appendChild(b);
+      setTimeout(function(el){el.remove()},1400,b);
+    }
+  }
+  function at(el){var r=el.getBoundingClientRect();return [r.left+r.width/2,r.top+r.height/2]}
+  var heart=document.getElementById('heart');
+  heart.addEventListener('click',function(){var p=at(heart);burst(p[0],p[1],34)});
+  var again=document.getElementById('again');
+  again.addEventListener('click',function(){var p=at(again);burst(p[0],p[1],44)});
+  document.addEventListener('pointerdown',function(e){
+    if(e.target.closest&&e.target.closest('button,input,label'))return;
+    burst(e.clientX,e.clientY,8);
+  });
+  var lines=document.querySelectorAll('.letter .l');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+    },{threshold:.6});
+    lines.forEach(function(l){io.observe(l)});
+  }else{lines.forEach(function(l){l.classList.add('in')})}
+  var inp=document.getElementById('since'),out=document.getElementById('days'),lab=document.getElementById('daysLabel');
+  function plural(n,a,b,c){var m=n%100,k=n%10;if(m>10&&m<20)return c;if(k===1)return a;if(k>1&&k<5)return b;return c}
+  function render(v){
+    if(!v)return;
+    var d=new Date(v+'T00:00:00'),now=new Date();now.setHours(0,0,0,0);
+    var n=Math.round((now-d)/86400000);
+    if(isNaN(n)||n<0){out.textContent='\u2665';lab.textContent='эта дата ещё впереди';return}
+    out.textContent=n;
+    lab.textContent=plural(n,'день','дня','дней')+' нашего счастья - и это только начало';
+  }
+  try{var saved=localStorage.getItem('katya-since');if(saved){inp.value=saved;render(saved)}}catch(e){}
+  inp.addEventListener('change',function(){
+    render(inp.value);
+    try{localStorage.setItem('katya-since',inp.value)}catch(e){}
+    var p=at(out);burst(p[0],p[1],26);
+  });
+})();
+</script>
+</body>
+</html>
